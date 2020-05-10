@@ -76,7 +76,9 @@ def  logout():
 
 @app.route('/profile')
 def  profile():
-    return render_template("profile.html")
+    collection = db.profile 
+    lpro = collection.find()
+    return render_template("profile.html", profile = lpro)
 
 @app.route('/products', methods=['GET', 'POST'])
 def products():
