@@ -34,7 +34,27 @@ db =  cluster.ATN  # cluster["ATN"]
 
 @app.route('/')
 def  index():
-    return render_template("login.html")
+    if session.get('logged_in_flag'):
+        if session['logged_in_flag']:
+            return redirect(url_for('home'))
+
+    query_parameters = request.args
+    vusername = query_parameters.get("username")
+    vpassword = query_parameters.get("password")
+
+    collection = db.Account
+    ### ch-eck Account / Tài khoản USER
+    results = collection.find({"username":vusername, "password": vpassword}) 
+
+
+    if  results.count() == 1:
+        session['logged_in_flag'] = True
+        session['username'] = results[0]["username"]
+        session['fullname'] = results[0]["fullname"]
+        return render_template("home.html", username=results[0]["username"], fullname=results[0]["fullname"])
+    else:
+        session['logged_in_flag'] = False
+        return render_template("login.html", mesg = "")
 
 
 @app.route('/home')
