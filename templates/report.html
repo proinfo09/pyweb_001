@@ -1,0 +1,41 @@
+{% extends 'base-layout.html' %}
+
+{% block header %}
+ 
+      <div class="col-4">
+  <h1>{% block title %} Report{% endblock %}</h1>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th width="200">STT</th>
+            <th>Ngày</th>
+            <th> Chủ cửa hàng </th>
+            <th>Tổng tiền </th>
+        </tr>
+    </thead>
+    
+    <tbody>
+    
+    {% for order in  orderList %}
+    <tr>
+        <td><P>{{ order["orderid"] }} </P></td>
+        <td><P>{{ order["date"] }} </P></td>
+        <td><P>{{ order["username"] }} </P></td>
+        <td><P>{{ order["total"] }} </P></td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td><P></P></td>
+        <td><P></P></td>
+        <td><P></P></td>
+        <td><P>{{ total["total"] }} </P></td>
+    </tr>
+    </tbody>
+    
+    </table>
+{% endblock %}
